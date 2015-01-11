@@ -68,15 +68,12 @@
               map: gmaps.map
             })
 
-            update = ->
+            v.location.subscribe ->
               lat = v.lat()
               lng = v.lng()
               h = {lat: lat, lng: lng}
               marker.setPosition(h)
               gmaps.map.panTo(h)
-
-            v.lat.subscribe update
-            v.lng.subscribe update
 
             setTimeout ->
               blackSpots = #{BlackSpotService.lat_lngs.to_json}
