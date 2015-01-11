@@ -55,14 +55,18 @@
               overviewMapControl: false
             })
 
-            marker = gmaps.addMarker({
-              lat: v.lat(),
-              lng: v.lng(),
-              animation: google.maps.Animation.DROP,
-              draggable: false,
-              title: "Current Location"
-            })
+            image = {
+              url: "assets/bmw.png",
+              size: new google.maps.Size(30, 30),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(15, 15)
+            }
 
+            marker = new google.maps.Marker({
+              position: {lat: v.lat(), lng: v.lng()},
+              icon: image,
+              map: gmaps.map
+            })
 
             update = ->
               lat = v.lat()
