@@ -113,10 +113,10 @@ namespace data
 
 
                 // fake some rain
-                if (rainCounter > 40)
+                if (rainCounter > 36)
                     rainIntensity = 62;
 
-                if (rainCounter > 50)
+                if (rainCounter > 46)
                     rainIntensity = 0;
 
                 if (counter == 0)
