@@ -1,0 +1,90 @@
+%article.type-system-sans
+
+  %h1#main SafeSpeedo
+
+  %section
+    .half
+      #speedo
+        %canvas#gauge
+    .half
+      #pad
+        #map
+  %section(data-bind="if: vehicle")
+    .half(data-bind="with: vehicle().speedo")
+      %img#badge(data-bind="attr: {src: warningBadgeUrl}, style: {opacity: warningBadgeUrl() ? 1 : 0}")
+    .half(data-bind="with: vehicle().speedo")
+      #speed-limit(data-bind="text: speedLimit")
+  %section(data-bind="if: vehicle")
+    .full
+      .grid-items-lines
+        .grid-item
+          %h1 Temperature (°C)
+          %p(data-bind="text: vehicle().speedo.temp")
+        .grid-item
+          %h1 Rain Intensity (%)
+          %p(data-bind="text: vehicle().speedo.rainIntensity")
+        .grid-item
+          %h1 Lat/Lng
+          %p(data-bind="text: vehicle().lat() + ', ' + vehicle().lng()")
+        .grid-item
+          %h1 Blackspot?
+          %p(data-bind="text: vehicle().speedo.nearBlackspot() ? 'true' : 'false'")
+        .grid-item
+          %h1 Speed (mph)
+          %p(data-bind="text: vehicle().speedo.currentSpeed()")
+
+:coffeescript
+  $ ->
+    lazyload "App", (App) ->
+      window.app = new App()
+      ko.applyBindings app
+
+      window.bmw.token (error, result) ->
+        if error
+          console.log error
+        else
+          app.loadUser result.UserId
+          app.loadVehicle().done (v) ->
+            gmaps = new GMaps({
+              el: '#map',
+              lat: v.lat(),
+              lng: v.lng(),
+              panControl: false,
+              streetViewControl: false,
+              mapTypeControl: false,
+              overviewMapControl: false
+            })
+
+            marker = gmaps.addMarker({
+              lat: v.lat(),
+              lng: v.lng(),
+              animation: google.maps.Animation.DROP,
+              draggable: false,
+              title: "Current Location"
+            })
+
+
+            update = ->
+              lat = v.lat()
+              lng = v.lng()
+              h = {lat: lat, lng: lng}
+              marker.setPosition(h)
+              gmaps.map.panTo(h)
+
+            v.lat.subscribe update
+            v.lng.subscribe update
+
+            setTimeout ->
+              blackSpots = #{BlackSpotService.lat_lngs.to_json}
+              for bs in blackSpots
+                opts =
+                  strokeColor: '#FF0000',
+                  strokeOpacity: 0.8,
+                  strokeWeight: 2,
+                  fillColor: '#FF0000',
+                  fillOpacity: 0.35,
+                  map: gmaps.map,
+                  center: bs,
+                  radius: 100
+                new google.maps.Circle(opts)
+            , 0

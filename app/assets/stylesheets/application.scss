@@ -1,0 +1,82 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_self
+ */
+
+@import "bourbon";
+@import "base/base";
+@import "neat";
+@import "refills/type-system-sans";
+@import "refills/grid-items-lines";
+
+html, body {
+  background: #242424;
+}
+
+article {
+  @include outer-container;
+
+  section {
+    margin-bottom: 30px;
+  }
+
+  .half {
+    @include span-columns(6);
+  }
+  .full {
+    @include span-columns(12);
+  }
+}
+
+#speedo {
+  height: 531px;
+}
+
+#pad {
+  padding-left: 24px;
+  padding-top: 24px;
+}
+
+#map {
+  width: 483px;
+  height: 483px;
+  border-radius: 500px;
+}
+
+h1#main {
+  color: #E3E3E3;
+  text-align: center;
+}
+
+#speed-limit {
+  background: white;
+  border: 19px solid red;
+  border-radius: 500px;
+  display: block;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  color: black;
+  padding-top: 20px;
+  line-height: 70px;
+  text-align: center;
+  font-size: 80px;
+  font-weight: bold;
+}
+
+#badge {
+  display: block;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+}
