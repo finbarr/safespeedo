@@ -16,35 +16,47 @@
 @import "bourbon";
 @import "base/base";
 @import "neat";
+
 @import "refills/type-system-sans";
 @import "refills/grid-items-lines";
 
+$dark: #242424;
+$light: #E3E3E3;
+
+.dash {
+  background: $dark;
+}
+
 html, body {
-  background: #242424;
+  // background: white;
 }
 
 article {
-  @include outer-container;
-
-  section {
-    margin-bottom: 30px;
-  }
+  @include outer-container(100%);
 
   .half {
     @include span-columns(6);
+    min-height: 884px;
   }
-  .full {
-    @include span-columns(12);
-  }
+}
+
+#gauge {
+  display: block;
 }
 
 #speedo {
+  width: 531px;
   height: 531px;
+  display: block;
+  margin: 0 auto;
 }
 
 #pad {
-  padding-left: 24px;
+  width: 483px;
+  height: 483px;
   padding-top: 24px;
+  margin: 0 auto;
+  position: relative;
 }
 
 #map {
@@ -54,7 +66,7 @@ article {
 }
 
 h1#main {
-  color: #E3E3E3;
+  color: $dark;
   text-align: center;
 }
 
@@ -72,6 +84,9 @@ h1#main {
   text-align: center;
   font-size: 80px;
   font-weight: bold;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 #badge {

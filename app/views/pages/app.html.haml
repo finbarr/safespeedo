@@ -1,37 +1,37 @@
 %article.type-system-sans
-
-  %h1#main SafeSpeedo
-
   %section
-    .half
+    .half.dash
       #speedo
         %canvas#gauge
-    .half
+      / ko if: vehicle
+      / ko with: vehicle().speedo
+      %img#badge(data-bind="attr: {src: warningBadgeUrl}, style: {opacity: warningBadgeUrl() ? 1 : 0}")
+      / /ko
+      / /ko
+    .half.stat
       #pad
         #map
-  %section(data-bind="if: vehicle")
-    .half(data-bind="with: vehicle().speedo")
-      %img#badge(data-bind="attr: {src: warningBadgeUrl}, style: {opacity: warningBadgeUrl() ? 1 : 0}")
-    .half(data-bind="with: vehicle().speedo")
-      #speed-limit(data-bind="text: speedLimit")
-  %section(data-bind="if: vehicle")
-    .full
-      .grid-items-lines
-        .grid-item
-          %h1 Temperature (°C)
-          %p(data-bind="text: vehicle().speedo.temp")
-        .grid-item
-          %h1 Rain Intensity (%)
-          %p(data-bind="text: vehicle().speedo.rainIntensity")
-        .grid-item
-          %h1 Lat/Lng
-          %p(data-bind="text: vehicle().lat() + ', ' + vehicle().lng()")
-        .grid-item
-          %h1 Blackspot?
-          %p(data-bind="text: vehicle().speedo.nearBlackspot() ? 'true' : 'false'")
-        .grid-item
-          %h1 Speed (mph)
-          %p(data-bind="text: vehicle().speedo.currentSpeed()")
+        / ko if: vehicle
+        / ko with: vehicle().speedo
+        #speed-limit(data-bind="text: speedLimit")
+        / /ko
+        %table
+          %tr
+            %th Lat/Lng
+            %td(data-bind="text: vehicle().lat() + ', ' + vehicle().lng()")
+          %tr
+            %th Speed (mph)
+            %td(data-bind="text: vehicle().speedo.currentSpeed()")
+          %tr
+            %th Temperature (°C)
+            %td(data-bind="text: vehicle().speedo.temp")
+          %tr
+            %th Rain Intensity (%)
+            %td(data-bind="text: vehicle().speedo.rainIntensity")
+          %tr
+            %th Blackspot?
+            %td(data-bind="text: vehicle().speedo.nearBlackspot() ? 'true' : 'false'")
+        / /ko
 
 :coffeescript
   $ ->
